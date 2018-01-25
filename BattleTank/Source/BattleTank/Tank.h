@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Components/InputComponent.h"
+#include "Engine/World.h"
 #include "Tank.generated.h"
 
 UCLASS()
@@ -27,17 +28,29 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void RotateBarrel(float axisValue);
-
-	void RotateTurret(float axisValue);
 
 	UFUNCTION(BlueprintCallable, Category = Tank)
 	void SetTurrentChildActor(UChildActorComponent* TurretFromBP);
+	void RotateTurret(float axisValue);
 
 	UFUNCTION(BlueprintCallable, Category = Tank)
 	void SetBarrelChildActor(UChildActorComponent* BarrelFromBP);
+	void RotateBarrel(float axisValue);
+
+	//Moving
+	UFUNCTION(BlueprintCallable, Category = Tank)
+	void SetTankChildActor(UChildActorComponent* TankFromBP);
+	void MoveTank(float Speed);
+	void RotateTank(float Speed);
+
+	UPROPERTY(EditAnywhere, Category = "Tank")
+	float RotationSpeed = 1.f;
+
+	UPROPERTY(EditAnywhere, Category = "Tank")
+	float MovementSpeed = 1.f;
 	
 private:
+	UChildActorComponent * ChildTank = nullptr;
 	UChildActorComponent* ChildTurret = nullptr;
 	UChildActorComponent* ChildBarrel = nullptr;
 };
